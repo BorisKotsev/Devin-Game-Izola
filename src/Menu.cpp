@@ -7,7 +7,8 @@ Menu::Menu()
 {
     m_menuTexture = nullptr;
     isWriting = false;
-    inputDelay = 1000;
+    timeFromLastInput = time(NULL);
+    startTime = time(NULL);
 }
 
 Menu::~Menu()
@@ -43,6 +44,8 @@ void Menu::init(string configFile)
     stream >> tmp >> m_insertRect.x >> m_insertRect.y >> m_insertRect.w >> m_insertRect.h;
     stream >> tmp >> insertImg;
     stream >> tmp >> m_input;
+
+    inputDelay = 1;
 
     stream.close();
 
@@ -104,10 +107,14 @@ void Menu::update()
             world.m_quitScene = true;
             world.m_gameState = GAME_STATE::GAME;
 
-            if (m_input.size() > 0)
+            if (m_input.size() > 0 && std::stoi(m_input) >= 3 && std::stoi(m_input) <= 50)
             {
                 std::cout << std::stoi(m_input);
                 world.m_game.initSession(std::stoi(m_input));
+            }
+            else
+            {
+                world.m_game.initSession(20);
             }
         }
         if (checkForMouseCollision(world.m_mouseCoordinates.x, world.m_mouseCoordinates.y,
@@ -131,7 +138,6 @@ void Menu::update()
     if (isWriting)
     {
         handleEvent();
-        timeFromLastInput++;
     }
     else
     {
@@ -145,8 +151,9 @@ void Menu::handleEvent()
     world.input();
     SDL_Event event = world.m_event;
 
-    if (timeFromLastInput < inputDelay)
+    if (time(NULL) - startTime < inputDelay)
     {
+        timeFromLastInput = time(NULL);
         return;
     }
 
@@ -155,24 +162,20 @@ void Menu::handleEvent()
         return;
     }
 
-    timeFromLastInput = 0;
-
     if (event.key.keysym.sym == SDLK_BACKSPACE && m_input.size() > 0 && event.type != SDL_KEYDOWN)
     {
         m_input = m_input.substr(0, m_input.length() - 1);
-        std::cout << "Text: " << m_input << std::endl;
         return;
     }
 
     if (event.type == SDL_TEXTINPUT)
     {
-        std::cout << "Type: " << (*event.text.text) << std::endl;
-        
         if (std::isdigit(*event.text.text))
         {
             m_input += event.text.text;
+            startTime = time(NULL);
         }
     }
 
-    std::cout << "Text: " << m_input << std::endl;
+    //cout << "Time" << timeFromLastInput << endl;
 }

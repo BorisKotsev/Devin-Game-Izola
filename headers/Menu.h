@@ -36,5 +36,5 @@ public:
 private:
     std::string m_input;
     bool isWriting;
-    time_t inputDelay, timeFromLastInput;
+    time_t inputDelay, timeFromLastInput, startTime;
 };

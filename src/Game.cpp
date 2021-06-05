@@ -27,6 +27,13 @@ Game::~Game()
 
 void Game::initSession(int size)
 {
+    m_boardSize = size;
+
+    m_startOfBoard = (world.m_SCREEN_WIDTH - m_boardWidth) / 2;
+    buffRect.w = m_boardWidth / m_boardSize;
+    buffRect.h = buffRect.w;
+    m_cellWidth = buffRect.w;
+
     for (unsigned short  y = 0; y < m_boardSize; y ++)
     {
         vector<Cell*> row;
