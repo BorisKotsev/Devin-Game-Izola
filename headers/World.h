@@ -9,6 +9,7 @@
 
 #include "Game.h"
 #include "Common.h"
+#include "Menu.h"
 
 class World
 {
@@ -18,6 +19,8 @@ public:
 
     SDL_Renderer* m_main_renderer;
     SDL_Window* m_main_window;
+
+    Menu m_menu;
 
     int m_SCREEN_WIDTH;
     int m_SCREEN_HEIGHT;

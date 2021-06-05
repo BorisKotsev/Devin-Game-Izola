@@ -30,7 +30,7 @@ void World::init()
 
     string config = "config\\world.txt";
 
-    string shipInsideImg, cursorImg;
+    string cursorImg;
 
     ifstream file;
 
@@ -45,6 +45,7 @@ void World::init()
     }
 
     m_game.load("game.txt");
+    m_menu.init("menu.txt")
 
     //cursorImg = "img\\menu\\" + cursorImg;
 

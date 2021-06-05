@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	
 	world.init();
 
-	world.m_gameState = GAME;
+	world.m_gameState = MENU;
 
 	while (!world.m_endGame)
 	{
