@@ -56,16 +56,17 @@ void Game::draw()
             cell->draw();
         }
     }
+    for (auto& player : m_players)
+    {
+        player->draw();
+    }
 }
 
 void Game::update()
 {
-    for (auto& rows : m_cells)
+    for (auto& player : m_players)
     {
-        for (auto& cell : rows)
-        {
-            cell->update();
-        }
+        player->update();
     }
 }
 
