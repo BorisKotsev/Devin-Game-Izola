@@ -1,0 +1,15 @@
+Menu_Image: UI_Menu.bmp
+
+Play_Button_Rect: 679 425 562 112
+
+Exit_Button_Rect: 1803 56 66 66
+
+Play_Button_Img: Play_Button.bmp
+
+Exit_Button_Img: Exit_Button.bmp
+
+Width_Height_Change: 32 18
+
+Play_Button_Bonus: 1.6 0.9
+
+Exit_Button_Bonus: 1 1

@@ -22,7 +22,6 @@ void World::init()
     m_SCREEN_WIDTH = 1920;
     m_SCREEN_HEIGHT = 1080;
 
-
     SDL_Init(SDL_INIT_EVERYTHING);
     m_main_window = SDL_CreateWindow("Izola", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1366, 768, 0);
     m_main_renderer = SDL_CreateRenderer(m_main_window, -1, SDL_RENDERER_PRESENTVSYNC);
@@ -30,7 +29,7 @@ void World::init()
 
     string config = "config\\world.txt";
 
-    string shipInsideImg, cursorImg;
+    string cursorImg;
 
     ifstream file;
 
@@ -45,6 +44,7 @@ void World::init()
     }
 
     m_game.load("game.txt");
+    m_menu.init("menu.txt");
 
     //cursorImg = "img\\menu\\" + cursorImg;
 
