@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 		}
 		if (world.m_gameState == GAME)
 		{
-			world.m_game.initSession(30);
+			//world.m_game.initSession(30);
 			while (!world.m_quitScene)
 			{
 				world.input();
