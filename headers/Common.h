@@ -25,10 +25,10 @@ enum GAME_STATE
 
 enum class CELL_STATE
 {
-    AVAILABLE = 0,
-    PLAYER,
-    FORBIDDEN
-};
+    AVAILABLE = 0, ///< AVAILABLE
+    TAKEN, ///< TAKEN
+    FORBIDDEN ///< FORBIDDEN
+}; ///< Cell state enumerator defining 3 cell states to use
 
 struct UI_object
 {
