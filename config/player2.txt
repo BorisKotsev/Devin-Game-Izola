@@ -1,0 +1,2 @@
+playerImg: warrior.bmp
+borderImg: Border.bmp
