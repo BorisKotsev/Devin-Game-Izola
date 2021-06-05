@@ -22,6 +22,9 @@ int main(int argc, char *argv[])
 		{
 			while (!world.m_quitScene)
 			{
+				world.input();
+				world.m_menu.update();
+				world.m_menu.draw();
 				SDL_Delay(25);
 			}
 			world.m_quitScene = false;
