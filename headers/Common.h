@@ -23,6 +23,13 @@ enum GAME_STATE
     EXIT = 4 ///< EXIT
 }; ///< Game state enumerator defining 5 game states to use
 
+enum class CELL_STATE
+{
+    AVAILABLE = 0,
+    PLAYER,
+    FORBIDDEN
+};
+
 struct UI_object
 {
     SDL_Texture* objTexture = NULL;
