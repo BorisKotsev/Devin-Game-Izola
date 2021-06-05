@@ -45,6 +45,13 @@ private:
 	unsigned short m_playerOnTurn;
 	bool m_moved;
 
+	SDL_Texture* m_player1Turn;
+	SDL_Texture* m_player2Turn;
+	SDL_Texture* m_player1Wins;
+	SDL_Texture* m_player2Wins;
+	SDL_Texture* m_selectCellToMove;
+	SDL_Texture* m_selectCellToEliminate;
+
 	SDL_Rect buffRect;
 
 };

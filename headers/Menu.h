@@ -21,6 +21,9 @@ public:
 
     SDL_Texture* m_menuTexture;
     SDL_Texture* m_backgroundMapTexture;
+    SDL_Texture* m_insertTexture;;
+
+    SDL_Rect m_insertRect;
 
     int widthChange, heightChange;
 

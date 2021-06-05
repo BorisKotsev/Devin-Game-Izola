@@ -13,3 +13,7 @@ Width_Height_Change: 32 18
 Play_Button_Bonus: 1.6 0.9
 
 Exit_Button_Bonus: 1 1
+
+Insert_Rect: 679 225 562 112
+
+InsertImg: insert.bmp

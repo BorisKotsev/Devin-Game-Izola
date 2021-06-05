@@ -48,7 +48,7 @@ void Game::load(string configFile)
     configFile = "../config/game.txt";
 
     string tmp;
-    string whiteCellImg, blackCellImg, crossImg;
+    string whiteCellImg, blackCellImg, crossImg, player1Turn, player2Turn, player1Wins, player2Wins, selectCellToMove, selectCellToEliminate;
 
     stream.open(configFile);
 
@@ -58,8 +58,13 @@ void Game::load(string configFile)
     stream >> tmp >> crossImg;
     stream >> tmp >> m_boardWidth;
     stream >> tmp >> m_topMargin;
-
-    stream.close();
+    stream >> tmp >> player1Turn;
+    stream >> tmp >> player2Turn;
+    stream >> tmp >> player1Wins;
+    stream >> tmp >> player2Wins;
+    stream >> tmp >> selectCellToMove;
+    stream >> tmp >> selectCellToEliminate;
+    stream.close();  
 
     m_whiteCellTexture = LoadTexture(whiteCellImg, world.m_main_renderer);
     m_blackCellTexture = LoadTexture(blackCellImg, world.m_main_renderer);
@@ -69,6 +74,13 @@ void Game::load(string configFile)
     buffRect.w = m_boardWidth / m_boardSize;
     buffRect.h = buffRect.w;
     m_cellWidth = buffRect.w;
+
+    m_player1Turn = LoadTexture(player1Turn, world.m_main_renderer);
+    m_player2Turn = LoadTexture(player2Turn, world.m_main_renderer);
+    m_player1Wins = LoadTexture(player1Wins, world.m_main_renderer);
+    m_player2Wins = LoadTexture(player2Wins, world.m_main_renderer);
+    m_selectCellToMove = LoadTexture(selectCellToMove, world.m_main_renderer);
+    m_selectCellToEliminate = LoadTexture(selectCellToEliminate, world.m_main_renderer);
 }
 
 void Game::draw()
@@ -94,6 +106,15 @@ void Game::draw()
                 SDL_RenderCopy(world.m_main_renderer, m_crossTexture, NULL, &buffRect);
             }
         }
+    }
+
+    if (m_playerOnTurn == 1)
+    {
+        SDL_RenderCopy(world.m_main_renderer, m_player1Turn, NULL, NULL);
+    }
+    else if (m_playerOnTurn == 2)
+    {
+        SDL_RenderCopy(world.m_main_renderer, m_player2Turn, NULL, NULL);
     }
     
 
