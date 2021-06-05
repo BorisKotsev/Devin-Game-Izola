@@ -2,12 +2,39 @@
 #include "SDL_image.h"
 #include <iostream>
 
+#include "../headers/World.h"
+
+World world;
+
 using namespace std;
 
 int main(int argc, char *argv[])
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
-		
+	
+	while (!world.m_endGame)
+	{
+		if (world.m_gameState == MENU)
+		{
+			while (!world.m_quitScene)
+			{
+				SDL_Delay(25);
+			}
+			world.m_quitScene = false;
+		}
+		if (world.m_gameState == GAME)
+		{
+			while (!world.m_quitScene)
+			{
+				SDL_Delay(25);
+			}
+			world.m_quitScene = false;
+		}
+		if (world.m_gameState == EXIT)
+		{
+			world.destroy();
+		}
+	}
 
 	return 0; 
 }
