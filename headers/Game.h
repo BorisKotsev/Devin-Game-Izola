@@ -25,6 +25,9 @@ public:
 	bool checkForMove(coordinates start, coordinates end);
 
 	void addPlayer(string configFile);
+	SDL_Rect syncCoor(coordinates coor);
+	coordinates screenCoorToLogical(coordinates coor);
+	coordinates logicalToScreen(coordinates coor);
 
 private:
 	std::vector<Player*> m_players;

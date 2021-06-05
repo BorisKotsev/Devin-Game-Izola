@@ -28,7 +28,8 @@ public:
     void draw();
     void update();
     void buttonHover(Button* button);
-protected:
 
+    void handleEvent();
 private:
+    std::string m_input;
 };

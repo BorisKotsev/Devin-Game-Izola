@@ -37,7 +37,8 @@ void Game::initSession(int size)
         }
         m_cells.push_back(row);
     }
-    D(m_cells.size());
+    addPlayer("player1.txt");
+    addPlayer("player2.txt");
 }
 
 void Game::load(string configFile)
@@ -172,18 +173,70 @@ void Game::placeElimination(const coordinates& coor)
 
 void Game::addPlayer(string configFile)
 {
+    coordinates coor;
+    bool goodPos = false;
+    while (!goodPos)
+    {
+        goodPos = true;
+        coor.x = rand() % m_boardSize;
+        coor.y = rand() % m_boardSize;
+        for (short i = 0; i < m_players.size() && goodPos; i++)
+        {
+            if (m_players[i]->m_logicalCoor.x == coor.x && m_players[i]->m_logicalCoor.y == coor.y)
+            {
+                goodPos = false;
+            }
+        }
+    }
     if (configFile == "player1.txt")
     {
         Player* player1 = new Player();
-        player1->init(configFile);
+        player1->init(configFile, m_cellWidth, coor.x, coor.y);
         m_players.push_back(player1);
     }
     else if (configFile == "player2.txt")
     {
         Player* player2 = new Player();
-        player2->init(configFile);
+        player2->init(configFile, m_cellWidth, coor.x, coor.y);
         m_players.push_back(player2);
     }
+}
+
+SDL_Rect Game::syncCoor(coordinates coor)
+{
+    buffRect.x = m_startOfBoard + coor.y * m_cellWidth;
+    buffRect.y = m_topMargin + coor.x * m_cellWidth;
+    return buffRect;
+}
+
+coordinates Game::screenCoorToLogical(coordinates coor)
+{
+    for (unsigned short y = 0; y < m_cells.size(); y++)
+    {
+        for (unsigned short x = 0; x < m_cells[y].size(); x++)
+        {
+            buffRect.x = m_startOfBoard + y * m_cellWidth;
+            buffRect.y = m_topMargin + x * m_cellWidth;
+            if (checkForMouseCollision(world.m_mouseCoordinates.x, world.m_mouseCoordinates.y, buffRect))
+            {
+                coordinates returnValue;
+                returnValue.x = x;
+                returnValue.y = y;
+                return returnValue;
+            }
+        }
+    }
+    coordinates returnValue;
+    returnValue.x = -1;
+    returnValue.y = -1;
+}
+
+coordinates Game::logicalToScreen(coordinates coor)
+{
+    coordinates returnVal;
+    returnVal.x = m_startOfBoard + coor.y * m_cellWidth;
+    returnVal.y = m_topMargin + coor.x * m_cellWidth;
+    return returnVal;
 }
 
 bool Game::checkForMove(coordinates start, coordinates end)

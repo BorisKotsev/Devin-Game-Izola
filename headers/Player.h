@@ -16,7 +16,7 @@ public:
 	Player();
 	virtual ~Player();
 
-	void init(string configFile);
+	void init(string configFile, unsigned short width, unsigned short x, unsigned short y);
 	void update();
 	void draw();
 
@@ -27,6 +27,7 @@ public:
 
     coordinates m_coor;
     coordinates m_direction;
+	fcoordinates m_velocity;
 
     UI_object m_selectedPlayer;
 
@@ -35,4 +36,7 @@ public:
 
     double m_moveRatio;
     double m_speed;
+
+	coordinates m_logicalCoor;
+	coordinates m_logicalDstCoor;
 };
