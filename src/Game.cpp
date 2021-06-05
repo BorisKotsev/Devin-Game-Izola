@@ -1,4 +1,4 @@
-#include "Game.h"
+#include "../headers/Game.h"
 
 Game::Game()
 {
@@ -52,7 +52,7 @@ void Game::draw()
     {
         for (auto& cell : rows)
         {
-            cell->draw();
+            //cell->draw();
         }
     }
     for (auto& player : m_players)
@@ -82,7 +82,7 @@ bool Game::isEmptyCell(const coordinates& coor)
 {
     if (!offBounds(coor))
     {
-        /*if (m_cells[coor.x][coor.y].m_state == AVAILABLE)
+        if (m_cells[coor.x][coor.y]->getState() == CELL_STATE::AVAILABLE)
         {
             return true;
         }
@@ -90,9 +90,19 @@ bool Game::isEmptyCell(const coordinates& coor)
         {
             return false;
         }
-        */
     }
     else {
         return false;
+    }
+}
+
+void Game::placeElimination(const coordinates& coor)
+{
+    if (!offBounds(coor))
+    {
+        if (isEmptyCell(coor))
+        {
+            m_cells[coor.y][coor.x]->setState(CELL_STATE::FORBIDDEN);
+        }
     }
 }

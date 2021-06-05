@@ -20,6 +20,7 @@ public:
 
 	bool offBounds(const coordinates&);
 	bool isEmptyCell(const coordinates& coor);
+	void placeElimination(const coordinates&);
 
 private:
 	std::vector<Player*> m_players;
