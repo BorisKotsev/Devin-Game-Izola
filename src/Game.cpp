@@ -27,6 +27,13 @@ Game::~Game()
 
 void Game::initSession(int size)
 {
+    m_boardSize = 3;
+ 
+    m_startOfBoard = (world.m_SCREEN_WIDTH - m_boardWidth) / 2;
+    buffRect.w = m_boardWidth / m_boardSize;
+    buffRect.h = buffRect.w;
+    m_cellWidth = buffRect.w;
+
     for (unsigned short  y = 0; y < m_boardSize; y ++)
     {
         vector<Cell*> row;
@@ -40,6 +47,8 @@ void Game::initSession(int size)
     addPlayer("player1.txt");
     addPlayer("player2.txt");
     m_playerOnTurn = 1;
+    m_gameOver = false;
+    m_winner = 1;
 }
 
 void Game::load(string configFile)
@@ -110,26 +119,39 @@ void Game::draw()
         }
     }
 
-    if (m_playerOnTurn == 1)
+    if (m_gameOver)
     {
-        if (m_moved)
+        if (m_winner == 1)
         {
-            SDL_RenderCopy(world.m_main_renderer, m_selectCellToEliminate, NULL, &(m_screenTextRect));
+            SDL_RenderCopy(world.m_main_renderer, m_player1Wins, NULL, &(m_screenTextRect));
         }
         else
         {
-            SDL_RenderCopy(world.m_main_renderer, m_player1Turn, NULL, &(m_screenTextRect));
+            SDL_RenderCopy(world.m_main_renderer, m_player2Wins, NULL, &(m_screenTextRect));
         }
-    }
-    else if (m_playerOnTurn == 2)
-    {
-        if (m_moved)
+    }else
+    { 
+        if (m_playerOnTurn == 1)
         {
-            SDL_RenderCopy(world.m_main_renderer, m_selectCellToEliminate, NULL, &(m_screenTextRect));
+            if (m_moved)
+            {
+                SDL_RenderCopy(world.m_main_renderer, m_selectCellToEliminate, NULL, &(m_screenTextRect));
+            }
+            else
+            {
+                SDL_RenderCopy(world.m_main_renderer, m_player1Turn, NULL, &(m_screenTextRect));
+            }
         }
-        else
+        else if (m_playerOnTurn == 2)
         {
-            SDL_RenderCopy(world.m_main_renderer, m_player2Turn, NULL, &(m_screenTextRect));
+            if (m_moved)
+            {
+                SDL_RenderCopy(world.m_main_renderer, m_selectCellToEliminate, NULL, &(m_screenTextRect));
+            }
+            else
+            {
+                SDL_RenderCopy(world.m_main_renderer, m_player2Turn, NULL, &(m_screenTextRect));
+            }
         }
     }
     
@@ -178,6 +200,21 @@ void Game::update()
     for (auto& player : m_players)
     {
         player->update();
+    }
+
+    if (checkForWin().first)
+    {
+        m_gameOver = true;
+        if (checkForWin().second == m_players[0])
+        {
+            cout << "m_players" << endl;
+            m_winner = 2;
+        }
+        else
+        {
+            cout << "m_players 2" << endl;
+            m_winner = 1;
+        }
     }
 }
 
@@ -305,4 +342,55 @@ bool Game::checkForMove(coordinates start, coordinates end, int index)
     }
     
     return true;
+}
+
+pair<bool, Player*> Game::checkForWin()
+{
+    bool isThereFreeSpace;
+
+    if (m_playerOnTurn == 1)
+    {
+        isThereFreeSpace = false;
+
+        for (int row = -1; row < 2; row++)
+        {
+            for (int column = -1; column < 2; column++)
+            {
+                if (isEmptyCell({ m_players[0]->m_logicalCoor.x + column, m_players[0]->m_logicalCoor.y + row }))
+                {
+                    isThereFreeSpace = true;
+                }
+            }
+        }
+
+
+        if (!isThereFreeSpace)
+        {
+            return pair<bool, Player*>(true, m_players[0]);
+        }
+    }
+    else
+    {
+        isThereFreeSpace = false;
+
+        for (int row = -1; row < 2; row++)
+        {
+            for (int column = -1; column < 2; column++)
+            {
+                if (isEmptyCell({ m_players[1]->m_logicalCoor.x + column, m_players[1]->m_logicalCoor.y + row}))
+                {
+                    cout << row << " " << column << endl;
+                    isThereFreeSpace = true;
+                }
+            }
+        }
+
+
+        if (!isThereFreeSpace)
+        {
+            return pair<bool, Player*>(true, m_players[1]);
+        }
+    }
+
+    return pair<bool, Player*>(false, nullptr);
 }

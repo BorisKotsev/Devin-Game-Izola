@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <cmath>
+#include <utility>
 #include "Player.h"
 #include "Cell.h"
 #include "Common.h"
@@ -31,6 +32,7 @@ public:
 	bool m_moved;
 	std::vector <std::vector<Cell*>> m_cells;
 	unsigned short m_playerOnTurn;
+	pair<bool, Player*> checkForWin();
 
 private:
 	std::vector<Player*> m_players;
@@ -54,4 +56,7 @@ private:
 	SDL_Texture* m_selectCellToEliminate;
 
 	SDL_Rect m_screenTextRect;
+
+	bool m_gameOver;
+	unsigned short m_winner;
 };

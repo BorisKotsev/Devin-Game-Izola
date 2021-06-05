@@ -1,4 +1,4 @@
-boardSize: 20
+boardSize: 3
 whiteCellImg: white-cell.bmp
 blackCellImg: green-cell.bmp
 crossImg: cross.bmp
