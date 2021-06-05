@@ -17,7 +17,7 @@ void Player::init(string configFile)
 {
     srand(time(NULL));
 
-    configFile = "..\config\\" + configFile;
+    configFile = "..\\config\\" + configFile;
     fstream stream;
 
     string tmp;
@@ -35,7 +35,20 @@ void Player::init(string configFile)
     m_playerTexture = LoadTexture(playerImg, world.m_main_renderer);
     m_selectedPlayer.objTexture = LoadTexture(borderImg, world.m_main_renderer);
 
+    m_objRect.x = 400;
+    m_objRect.y = 600;
+    m_objRect.w = 64;
+    m_objRect.h = 64;
+
+    m_coor.x = m_objRect.x;
+    m_coor.y = m_objRect.y;
+
     m_dstRect = m_objRect;
+
+    m_moving = false;
+    m_borderActive = false;
+
+    world.m_mouseIsPressed = false;
 }
 
 void Player::draw()
@@ -67,6 +80,7 @@ void Player::update()
 {
     if (world.m_mouseIsPressed && m_borderActive)
     {
+        
         if (!checkForMouseCollision(world.m_mouseCoordinates.x, world.m_mouseCoordinates.y, m_objRect))
         {
             m_dstRect.x = world.m_mouseCoordinates.x - m_objRect.w / 2;
@@ -76,6 +90,7 @@ void Player::update()
 
             m_moving = true;
         }
+        
     }
 
     if (m_moving)
@@ -108,7 +123,7 @@ void Player::update()
 
         if (abs(m_dstRect.x - m_objRect.x) < 5)
         {
-            m_moveRatio = false;
+            m_moving = false;
         }
     }
 }

@@ -37,7 +37,8 @@ void Game::initSession(int size)
         }
         m_cells.push_back(row);
     }
-    D(m_cells.size());
+    addPlayer("player1.txt");
+    addPlayer("player2.txt");
 }
 
 void Game::load(string configFile)
