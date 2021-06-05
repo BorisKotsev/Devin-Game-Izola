@@ -119,6 +119,7 @@ void Menu::update()
             m_insertRect))
         {
             isWriting = true;
+            m_input = ""; 
         }
         else
         {
@@ -142,7 +143,7 @@ void Menu::handleEvent()
     world.input();
     SDL_Event event = world.m_event;
 
-    if (m_input.size() >= 2)
+    if (m_input.size() > 5)
     {
         return;
     }
