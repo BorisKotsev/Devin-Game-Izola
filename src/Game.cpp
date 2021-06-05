@@ -188,7 +188,7 @@ void Game::addPlayer(string configFile)
 
 bool Game::checkForMove(coordinates start, coordinates end)
 {
-    if ((abs(start.x - end.x) || abs(start.y - end.y)) >= 2)
+    if ((abs(start.x - end.x) || abs(start.y - end.y)) >= 2 || m_cells[end.x][end.y]->getState() == CELL_STATE::FORBIDDEN || m_cells[end.x][end.y]->getState() == CELL_STATE::TAKEN)
     {
         return false;
     }
