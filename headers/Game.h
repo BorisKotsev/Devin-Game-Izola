@@ -22,16 +22,18 @@ public:
 	bool offBounds(const coordinates&);
 	bool isEmptyCell(const coordinates& coor);
 	void placeElimination(const coordinates&);
-	bool checkForMove(coordinates start, coordinates end);
+	bool checkForMove(coordinates start, coordinates end, int index);
 
 	void addPlayer(string configFile);
 	SDL_Rect syncCoor(coordinates coor);
 	coordinates screenCoorToLogical(coordinates coor);
 	coordinates logicalToScreen(coordinates coor);
+	bool m_moved;
+	std::vector <std::vector<Cell*>> m_cells;
+	unsigned short m_playerOnTurn;
 
 private:
 	std::vector<Player*> m_players;
-	std::vector <std::vector<Cell*>> m_cells;
 	unsigned short m_boardSize;
 	SDL_Texture* m_whiteCellTexture;
 	SDL_Texture* m_blackCellTexture;
@@ -41,9 +43,6 @@ private:
 	unsigned short m_startOfBoard;
 	unsigned short m_topMargin;
 	unsigned short m_cellWidth;
-
-	unsigned short m_playerOnTurn;
-	bool m_moved;
 
 	SDL_Rect buffRect;
 

@@ -39,6 +39,7 @@ void Game::initSession(int size)
     }
     addPlayer("player1.txt");
     addPlayer("player2.txt");
+    m_playerOnTurn = 1;
 }
 
 void Game::load(string configFile)
@@ -107,7 +108,9 @@ void Game::draw()
 
 void Game::update()
 {
-    m_moved = true;
+    D(m_moved);
+    D(m_playerOnTurn);
+
     if (m_moved)
     {
         if (world.m_mouseIsPressed)
@@ -118,9 +121,21 @@ void Game::update()
                 {
                     buffRect.x = m_startOfBoard + y * m_cellWidth;
                     buffRect.y = m_topMargin + x * m_cellWidth;
-                    if (checkForMouseCollision(world.m_mouseCoordinates.x, world.m_mouseCoordinates.y, buffRect))
+                    coordinates buff;
+                    buff.x = x;
+                    buff.y = y;
+                    if (checkForMouseCollision(world.m_mouseCoordinates.x, world.m_mouseCoordinates.y, buffRect) && isEmptyCell(buff))
                     {
                         m_cells[y][x]->setState(CELL_STATE::FORBIDDEN);
+                        m_moved = false;
+                        if (world.m_game.m_playerOnTurn == 1)
+                        {
+                            world.m_game.m_playerOnTurn = 2;
+                        }
+                        else
+                        {
+                            world.m_game.m_playerOnTurn = 1;
+                        }
                     }
                 }
             }
@@ -146,7 +161,7 @@ bool Game::isEmptyCell(const coordinates& coor)
 {
     if (!offBounds(coor))
     {
-        if (m_cells[coor.x][coor.y]->getState() == CELL_STATE::AVAILABLE)
+        if (m_cells[coor.y][coor.x]->getState() == CELL_STATE::AVAILABLE)
         {
             return true;
         }
@@ -188,16 +203,19 @@ void Game::addPlayer(string configFile)
             }
         }
     }
+    m_cells[coor.y][coor.y]->getState() == CELL_STATE::FORBIDDEN;
     if (configFile == "player1.txt")
     {
         Player* player1 = new Player();
         player1->init(configFile, m_cellWidth, coor.x, coor.y);
+        player1->m_index = 1;
         m_players.push_back(player1);
     }
     else if (configFile == "player2.txt")
     {
         Player* player2 = new Player();
         player2->init(configFile, m_cellWidth, coor.x, coor.y);
+        player2->m_index = 2;
         m_players.push_back(player2);
     }
 }
@@ -239,13 +257,19 @@ coordinates Game::logicalToScreen(coordinates coor)
     return returnVal;
 }
 
-bool Game::checkForMove(coordinates start, coordinates end)
+bool Game::checkForMove(coordinates start, coordinates end, int index)
 {
-    if ((abs(start.x - end.x) || abs(start.y - end.y)) >= 2 || m_cells[end.x][end.y]->getState() == CELL_STATE::FORBIDDEN || m_cells[end.x][end.y]->getState() == CELL_STATE::TAKEN)
+    if (index == m_playerOnTurn)
+    {
+        if (abs(start.x - end.x) >= 2 || abs(start.y - end.y) >= 2 || m_cells[end.y][end.x]->getState() == CELL_STATE::FORBIDDEN || m_cells[end.y][end.x]->getState() == CELL_STATE::TAKEN || m_moved)
+        {
+            return false;
+        }
+    }
+    else
     {
         return false;
     }
     
     return true;
 }
-

@@ -29,6 +29,8 @@ public:
     coordinates m_direction;
 	fcoordinates m_velocity;
 
+	int m_index;
+
     UI_object m_selectedPlayer;
 
     bool m_borderActive;

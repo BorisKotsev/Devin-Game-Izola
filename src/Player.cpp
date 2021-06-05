@@ -68,7 +68,7 @@ void Player::draw()
     
     SDL_RenderCopy(world.m_main_renderer, m_playerTexture, NULL, &(m_objRect));
     
-    if (m_borderActive)
+    if (m_borderActive && world.m_game.m_playerOnTurn == m_index)
     {
         m_selectedPlayer.objRect.x = (m_objRect.x - 5);
         m_selectedPlayer.objRect.y = (m_objRect.y - 5);
@@ -86,8 +86,9 @@ void Player::update()
         
         if (!checkForMouseCollision(world.m_mouseCoordinates.x, world.m_mouseCoordinates.y, m_objRect))
         {
-            if (world.m_game.screenCoorToLogical(world.m_mouseCoordinates).x != -1)
+            if (world.m_game.checkForMove(m_logicalCoor, world.m_game.screenCoorToLogical(world.m_mouseCoordinates), m_index))
             {
+                world.m_game.m_cells[m_logicalCoor.y][m_logicalCoor.x]->setState(CELL_STATE::AVAILABLE);
                 m_dstRect.x = world.m_game.screenCoorToLogical(world.m_mouseCoordinates).x;
                 m_dstRect.y = world.m_game.screenCoorToLogical(world.m_mouseCoordinates).y;
                 m_logicalCoor.x = m_dstRect.x;
@@ -101,6 +102,10 @@ void Player::update()
                 m_borderActive = false;
 
                 m_moving = true;
+
+                world.m_game.m_moved = true;
+
+                world.m_game.m_cells[m_logicalCoor.y][m_logicalCoor.x]->setState(CELL_STATE::TAKEN);
             }
         }
         
