@@ -48,4 +48,23 @@ struct fcoordinates
     float y = 0;
 };
 
+struct Button
+{
+    SDL_Rect startRect;
+    SDL_Rect objectRect;
+    SDL_Rect minRect;
+    SDL_Rect maxRect;
+
+    SDL_Texture* objTexture = nullptr;
+
+    double currentBonusW = 0;
+    double currentBonusH = 0;
+
+    double bonusW = 0;
+    double bonusH = 0;
+
+    double maxWidth = 0;
+    double maxHeigth = 0;
+};
+
 #endif // DEFINES_H_INCLUDED
