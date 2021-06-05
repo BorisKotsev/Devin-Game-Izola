@@ -121,7 +121,6 @@ void Menu::update()
         {
             isWriting = true;
             m_input = ""; 
-            timeFromLastInput = 0;
         }
         else
         {
@@ -155,6 +154,8 @@ void Menu::handleEvent()
     {
         return;
     }
+
+    timeFromLastInput = 0;
 
     if (event.key.keysym.sym == SDLK_BACKSPACE && m_input.size() > 0 && event.type != SDL_KEYDOWN)
     {
