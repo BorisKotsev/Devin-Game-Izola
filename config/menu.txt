@@ -17,3 +17,5 @@ Exit_Button_Bonus: 1 1
 Insert_Rect: 679 225 562 112
 
 InsertImg: insert.bmp
+
+Board_Size_Default_Value: 20

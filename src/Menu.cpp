@@ -27,7 +27,7 @@ void Menu::init(string configFile)
     string PlayButtonImg;
     string ExitButtonImg;
     string insertImg;
-
+    
     stream.open(configFile.c_str());
 
     stream >> tmp >> menuImg;
@@ -40,6 +40,7 @@ void Menu::init(string configFile)
     stream >> tmp >> exitButton.bonusW >> exitButton.bonusH;
     stream >> tmp >> m_insertRect.x >> m_insertRect.y >> m_insertRect.w >> m_insertRect.h;
     stream >> tmp >> insertImg;
+    stream >> tmp >> m_input;
 
     stream.close();
 
@@ -100,7 +101,12 @@ void Menu::update()
         {
             world.m_quitScene = true;
             world.m_gameState = GAME_STATE::GAME;
-            //world.m_game.initSession(std::stoi(m_input));
+
+            if (m_input.size() > 0)
+            {
+                std::cout << std::stoi(m_input);
+                world.m_game.initSession(std::stoi(m_input));
+            }
         }
         if (checkForMouseCollision(world.m_mouseCoordinates.x, world.m_mouseCoordinates.y,
                                    exitButton.objectRect))
