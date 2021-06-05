@@ -106,3 +106,19 @@ void Game::placeElimination(const coordinates& coor)
         }
     }
 }
+
+void Game::addPlayer(string configFile)
+{
+    if (configFile == "player1.txt")
+    {
+        Player* player1 = new Player();
+        player1->init(configFile);
+        m_players.push_back(player1);
+    }
+    else if (configFile == "player2.txt")
+    {
+        Player* player2 = new Player();
+        player2->init(configFile);
+        m_players.push_back(player2);
+    }
+}

@@ -1,2 +1,3 @@
 playerImg: warrior.bmp
 borderImg: Border.bmp
+speed: 5

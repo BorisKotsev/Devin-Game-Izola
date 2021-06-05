@@ -22,6 +22,8 @@ public:
 	bool isEmptyCell(const coordinates& coor);
 	void placeElimination(const coordinates&);
 
+	void addPlayer(string configFile);
+
 private:
 	std::vector<Player*> m_players;
 	std::vector <std::vector<Cell*>> m_cells;

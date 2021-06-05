@@ -1,2 +1,3 @@
 playerImg: archer.bmp
 borderImg: Border.bmp
+speed: 5

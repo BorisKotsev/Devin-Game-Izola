@@ -29,3 +29,12 @@ SDL_Texture* LoadTexture(string configFile, SDL_Renderer* renderer)
     }
     return texture;
 }
+
+bool checkForMouseCollision(int mouseX, int mouseY, SDL_Rect object)
+{
+    if (mouseX > object.x && mouseX < object.x + object.w && mouseY > object.y && mouseY < object.y + object.h)
+    {
+        return true;
+    }
+    return false;
+}
