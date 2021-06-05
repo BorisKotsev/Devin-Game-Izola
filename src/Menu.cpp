@@ -6,6 +6,7 @@ extern World world;
 Menu::Menu()
 {
     m_menuTexture = nullptr;
+    isWriting = false;
 }
 
 Menu::~Menu()
@@ -114,10 +115,26 @@ void Menu::update()
             world.m_quitScene = true;
             world.m_gameState = GAME_STATE::EXIT;
         }
+        if (checkForMouseCollision(world.m_mouseCoordinates.x, world.m_mouseCoordinates.y,
+            m_insertRect))
+        {
+            isWriting = true;
+        }
+        else
+        {
+            isWriting = false;
+        }
     }
 
-    buttonHover(&playButton);
-    buttonHover(&exitButton);
+    if (isWriting)
+    {
+        handleEvent();
+    }
+    else
+    {
+        buttonHover(&playButton);
+        buttonHover(&exitButton);
+    }
 }
 
 void Menu::handleEvent()
