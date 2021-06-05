@@ -3,13 +3,15 @@
 #include <vector>
 #include "Player.h"
 #include "Cell.h"
-#include <Common.h>
+#include "Common.h"
 
 class Game
 {
 public:
 	Game();
 	~Game();
+
+	void load(string configFile);
 
 	void draw();
 	void update();
