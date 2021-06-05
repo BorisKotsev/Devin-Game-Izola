@@ -7,6 +7,7 @@
 
 #include <SDL.h>
 
+#include "Game.h"
 #include "Common.h"
 
 class World
@@ -33,6 +34,8 @@ public:
     GAME_STATE m_gameState;
 
     coordinates m_mouseCoordinates;
+
+    Game m_game;
 
     void init();
     void input();
