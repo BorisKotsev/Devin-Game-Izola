@@ -19,3 +19,7 @@ Insert_Rect: 679 225 562 112
 InsertImg: insert.bmp
 
 Board_Size_Default_Value: 20
+
+Input: input.bmp
+
+InputRect: 200 30 1500 110
