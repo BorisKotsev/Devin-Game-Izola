@@ -1,7 +1,15 @@
 {
   "ExpandedNodes": [
+<<<<<<< Updated upstream
     ""
   ],
   "SelectedNode": "\\C:\\Users\\Konstantin\\Documents\\C++PROGRAMING\\NiTe\\DevinGame",
+=======
+    "",
+    "\\headers",
+    "\\src"
+  ],
+  "SelectedNode": "\\src\\main.cpp",
+>>>>>>> Stashed changes
   "PreviewInSolutionExplorer": false
 }
