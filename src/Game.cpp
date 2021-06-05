@@ -65,6 +65,7 @@ void Game::load(string configFile)
     stream >> tmp >> player2Wins;
     stream >> tmp >> selectCellToMove;
     stream >> tmp >> selectCellToEliminate;
+    stream >> tmp >> m_screenTextRect.x >> m_screenTextRect.y >> m_screenTextRect.w >> m_screenTextRect.h;
     stream.close();  
 
     m_whiteCellTexture = LoadTexture(whiteCellImg, world.m_main_renderer);
@@ -111,11 +112,25 @@ void Game::draw()
 
     if (m_playerOnTurn == 1)
     {
-        SDL_RenderCopy(world.m_main_renderer, m_player1Turn, NULL, NULL);
+        if (m_moved)
+        {
+            SDL_RenderCopy(world.m_main_renderer, m_selectCellToEliminate, NULL, &(m_screenTextRect));
+        }
+        else
+        {
+            SDL_RenderCopy(world.m_main_renderer, m_player1Turn, NULL, &(m_screenTextRect));
+        }
     }
     else if (m_playerOnTurn == 2)
     {
-        SDL_RenderCopy(world.m_main_renderer, m_player2Turn, NULL, NULL);
+        if (m_moved)
+        {
+            SDL_RenderCopy(world.m_main_renderer, m_selectCellToEliminate, NULL, &(m_screenTextRect));
+        }
+        else
+        {
+            SDL_RenderCopy(world.m_main_renderer, m_player2Turn, NULL, &(m_screenTextRect));
+        }
     }
     
 
@@ -129,9 +144,6 @@ void Game::draw()
 
 void Game::update()
 {
-    D(m_moved);
-    D(m_playerOnTurn);
-
     if (m_moved)
     {
         if (world.m_mouseIsPressed)

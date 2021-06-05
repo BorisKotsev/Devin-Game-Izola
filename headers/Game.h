@@ -46,4 +46,12 @@ private:
 
 	SDL_Rect buffRect;
 
+	SDL_Texture* m_player1Turn;
+	SDL_Texture* m_player2Turn;
+	SDL_Texture* m_player1Wins;
+	SDL_Texture* m_player2Wins;
+	SDL_Texture* m_selectCellToMove;
+	SDL_Texture* m_selectCellToEliminate;
+
+	SDL_Rect m_screenTextRect;
 };

@@ -56,7 +56,7 @@ void Player::init(string configFile, unsigned short width, unsigned short x, uns
 
 void Player::draw()
 {
-    if (world.m_mouseIsDoubleClicked && checkForMouseCollision(world.m_mouseCoordinates.x, world.m_mouseCoordinates.y, m_objRect))
+    if (world.m_mouseIsDoubleClicked && checkForMouseCollision(world.m_mouseCoordinates.x, world.m_mouseCoordinates.y, m_objRect) && world.m_game.m_playerOnTurn == m_index)
     {
         m_selectedPlayer.objRect.x = (m_objRect.x - 5);
         m_selectedPlayer.objRect.y = (m_objRect.y - 5);

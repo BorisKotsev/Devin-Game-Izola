@@ -10,3 +10,4 @@ player1Wins: player1Wins.bmp
 player2Wins: player2Wins.bmp
 SelectCellToMove: selectCell.bmp
 SelectCellToEliminate: selectCellDelete.bmp
+TextRect: 540 10 700 110
