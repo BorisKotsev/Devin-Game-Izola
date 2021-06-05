@@ -8,7 +8,7 @@ SDL_Texture* LoadTexture(string configFile, SDL_Renderer* renderer)
 
     try
     {
-        configFile = "img\\" + configFile;
+        configFile = "..\\imgs\\" + configFile;
 
         SDL_Surface* loadingSurface = SDL_LoadBMP(configFile.c_str());
         texture = SDL_CreateTextureFromSurface(renderer, loadingSurface);
