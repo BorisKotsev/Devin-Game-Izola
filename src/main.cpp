@@ -12,6 +12,10 @@ int main(int argc, char *argv[])
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	
+	world.init();
+
+	world.m_gameState = GAME;
+
 	while (!world.m_endGame)
 	{
 		if (world.m_gameState == MENU)
@@ -24,6 +28,7 @@ int main(int argc, char *argv[])
 		}
 		if (world.m_gameState == GAME)
 		{
+			world.m_game.initSession(30);
 			while (!world.m_quitScene)
 			{
 				world.input();

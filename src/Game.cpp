@@ -1,4 +1,7 @@
 #include "../headers/Game.h"
+#include "../headers/World.h"
+
+extern World world;
 
 Game::Game()
 {
@@ -23,42 +26,74 @@ Game::~Game()
 
 void Game::initSession(int size)
 {
-    m_cells.resize(size);
-
-    for (auto& cell : m_cells)
+    for (unsigned short  y = 0; y < m_boardSize; y ++)
     {
-        cell.resize(size);
+        vector<Cell*> row;
+        for (unsigned short x = 0; x < m_boardSize; x++)
+        {
+            Cell* cell = new Cell();
+            row.push_back(cell);
+        }
+        m_cells.push_back(row);
     }
+    D(m_cells.size());
 }
 
 void Game::load(string configFile)
 {
     fstream stream;
 
+    configFile = "../config/game.txt";
+
     string tmp;
     string whiteCellImg, blackCellImg;
 
     stream.open(configFile);
-    
+
     stream >> tmp >> m_boardSize;
-    stream >> tmp >> whiteCellImg >> blackCellImg;
+    stream >> tmp >> whiteCellImg;
+    stream >> tmp >> blackCellImg;
+    stream >> tmp >> m_boardWidth;
+    stream >> tmp >> m_topMargin;
 
     stream.close();
+
+    m_whiteCellTexture = LoadTexture(whiteCellImg, world.m_main_renderer);
+    m_blackCellTexture = LoadTexture(blackCellImg, world.m_main_renderer);
+
+    m_startOfBoard = (world.m_SCREEN_WIDTH - m_boardWidth) / 2;
+    buffRect.w = m_boardWidth / m_boardSize;
+    buffRect.h = buffRect.w;
+    m_cellWidth = buffRect.w;
 }
 
 void Game::draw()
 {
-    for (auto& rows : m_cells)
+    SDL_RenderClear(world.m_main_renderer);
+    for (unsigned short y = 0; y < m_cells.size(); y++)
     {
-        for (auto& cell : rows)
+        for (unsigned short x = 0; x < m_cells[y].size(); x++)
         {
-            //cell->draw();
+            buffRect.x = m_startOfBoard + y * m_cellWidth;
+            buffRect.y = m_topMargin + x * m_cellWidth;
+            if ((y % 2 == 0 && x % 2 == 0) || (y % 2 == 1 && x % 2 == 1))
+            {
+                SDL_RenderCopy(world.m_main_renderer, m_whiteCellTexture, NULL, &buffRect);
+            }
+            else
+            {
+                SDL_RenderCopy(world.m_main_renderer, m_blackCellTexture, NULL, &buffRect);
+            }
         }
     }
+    
+
     for (auto& player : m_players)
     {
         player->draw();
     }
+    
+    SDL_RenderPresent(world.m_main_renderer);
 }
 
 void Game::update()
