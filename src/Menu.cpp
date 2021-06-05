@@ -143,12 +143,12 @@ void Menu::handleEvent()
     world.input();
     SDL_Event event = world.m_event;
 
-    if (m_input.size() > 5)
+    if (m_input.size() >= 2)
     {
         return;
     }
 
-    if (event.type == SDL_TEXTINPUT)
+    if (event.type == SDL_TEXTINPUT && event.type == SDL_KEYDOWN)
     {
         if (std::isdigit(*event.text.text))
         {
