@@ -94,6 +94,7 @@ void Menu::update()
         {
             world.m_quitScene = true;
             world.m_gameState = GAME_STATE::GAME;
+            world.m_game.initSession(std::stoi(m_input));
         }
         if (checkForMouseCollision(world.m_mouseCoordinates.x, world.m_mouseCoordinates.y,
                                    exitButton.objectRect))
@@ -105,4 +106,28 @@ void Menu::update()
 
     buttonHover(&playButton);
     buttonHover(&exitButton);
+}
+
+void Menu::handleEvent()
+{
+    world.input();
+    SDL_Event event = world.m_event;
+
+    if (m_input.size() >= 2)
+    {
+        return;
+    }
+
+    if (event.type == SDL_TEXTINPUT)
+    {
+        if (std::isdigit(*event.text.text))
+        {
+            m_input += event.text.text;
+        }
+    }
+
+    if (event.key.keysym.sym == SDLK_BACKSPACE && m_input.size() > 0 && event.type != SDL_KEYDOWN)
+    {
+        m_input = m_input.substr(0, m_input.length() - 1);
+    }
 }
