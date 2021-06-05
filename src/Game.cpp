@@ -207,12 +207,10 @@ void Game::update()
         m_gameOver = true;
         if (checkForWin().second == m_players[0])
         {
-            cout << "m_players" << endl;
             m_winner = 2;
         }
         else
         {
-            cout << "m_players 2" << endl;
             m_winner = 1;
         }
     }
@@ -379,7 +377,6 @@ pair<bool, Player*> Game::checkForWin()
             {
                 if (isEmptyCell({ m_players[1]->m_logicalCoor.x + column, m_players[1]->m_logicalCoor.y + row}))
                 {
-                    cout << row << " " << column << endl;
                     isThereFreeSpace = true;
                 }
             }

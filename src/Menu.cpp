@@ -29,6 +29,7 @@ void Menu::init(string configFile)
     string PlayButtonImg;
     string ExitButtonImg;
     string insertImg;
+    string inputImg;
     
     stream.open(configFile.c_str());
 
@@ -43,6 +44,8 @@ void Menu::init(string configFile)
     stream >> tmp >> m_insertRect.x >> m_insertRect.y >> m_insertRect.w >> m_insertRect.h;
     stream >> tmp >> insertImg;
     stream >> tmp >> m_input;
+    stream >> tmp >> inputImg;
+    stream >> tmp >> m_inputRect.x >> m_inputRect.y >> m_inputRect.w >> m_inputRect.h;
 
     stream.close();
 
@@ -50,6 +53,7 @@ void Menu::init(string configFile)
     playButton.objTexture = LoadTexture(PlayButtonImg, renderer);
     exitButton.objTexture = LoadTexture(ExitButtonImg, renderer);
     m_insertTexture = LoadTexture(insertImg, renderer);
+    m_inputTexture = LoadTexture(inputImg, renderer);
 
     playButton.startRect = playButton.objectRect;
     exitButton.startRect = exitButton.objectRect;
@@ -66,6 +70,8 @@ void Menu::draw()
     SDL_RenderCopy(renderer, exitButton.objTexture, NULL, &(exitButton.objectRect));
 
     SDL_RenderCopy(renderer, m_insertTexture, NULL, &(m_insertRect));
+
+    SDL_RenderCopy(renderer, m_inputTexture, NULL, &(m_inputRect));
 
     SDL_RenderPresent(renderer);
 }

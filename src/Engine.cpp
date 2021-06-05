@@ -38,3 +38,36 @@ bool checkForMouseCollision(int mouseX, int mouseY, SDL_Rect object)
     }
     return false;
 }
+
+void write(string text, coordinates coor, SDL_Renderer* renderer, int FONT_SIZE)
+{
+    SDL_Texture* texture;
+    SDL_Surface* surface;
+    SDL_Rect rect;
+    SDL_Color fcolor;
+    TTF_Font* font;
+
+    string str = "ttf/Perpetua-Titling-MT.ttf";
+
+    font = TTF_OpenFont(str.c_str(), FONT_SIZE);
+
+    if (font == NULL)
+    {
+        fprintf(stderr, "error: font not found\n");
+        exit(EXIT_FAILURE);
+    }
+
+    fcolor.r = 0;
+    fcolor.g = 0;
+    fcolor.b = 0;
+    const char* t = text.c_str();
+    surface = TTF_RenderText_Solid(font, t, fcolor);
+    texture = SDL_CreateTextureFromSurface(renderer, surface);
+    rect.w = surface->w;
+    rect.h = surface->h;
+    rect.x = coor.x;
+    rect.y = coor.y;
+    SDL_RenderCopy(renderer, texture, NULL, &rect);
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
+}
