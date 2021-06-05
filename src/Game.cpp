@@ -1,5 +1,4 @@
-#include "../headers/Game.h"
-#include <fstream>
+#include "Game.h"
 
 Game::Game()
 {

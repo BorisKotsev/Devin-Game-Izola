@@ -1,0 +1,2 @@
+playerImg: archer.bmp
+borderImg: Border.bmp
