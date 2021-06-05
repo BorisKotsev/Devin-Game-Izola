@@ -1,5 +1,6 @@
 boardSize: 20
 whiteCellImg: white-cell.bmp
 blackCellImg: green-cell.bmp
+crossImg: cross.bmp
 boardWidth: 900
 topMargin: 180

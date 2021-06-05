@@ -30,6 +30,7 @@ private:
 	unsigned short m_boardSize;
 	SDL_Texture* m_whiteCellTexture;
 	SDL_Texture* m_blackCellTexture;
+	SDL_Texture* m_crossTexture;
 
 	unsigned short m_boardWidth;
 	unsigned short m_startOfBoard;

@@ -1,5 +1,6 @@
 #include "../headers/Game.h"
 #include "../headers/World.h"
+#include "../headers/Common.h"
 
 extern World world;
 
@@ -46,13 +47,14 @@ void Game::load(string configFile)
     configFile = "../config/game.txt";
 
     string tmp;
-    string whiteCellImg, blackCellImg;
+    string whiteCellImg, blackCellImg, crossImg;
 
     stream.open(configFile);
 
     stream >> tmp >> m_boardSize;
     stream >> tmp >> whiteCellImg;
     stream >> tmp >> blackCellImg;
+    stream >> tmp >> crossImg;
     stream >> tmp >> m_boardWidth;
     stream >> tmp >> m_topMargin;
 
@@ -60,6 +62,7 @@ void Game::load(string configFile)
 
     m_whiteCellTexture = LoadTexture(whiteCellImg, world.m_main_renderer);
     m_blackCellTexture = LoadTexture(blackCellImg, world.m_main_renderer);
+    m_crossTexture = LoadTexture(crossImg, world.m_main_renderer);
 
     m_startOfBoard = (world.m_SCREEN_WIDTH - m_boardWidth) / 2;
     buffRect.w = m_boardWidth / m_boardSize;
@@ -83,6 +86,10 @@ void Game::draw()
             else
             {
                 SDL_RenderCopy(world.m_main_renderer, m_blackCellTexture, NULL, &buffRect);
+            }
+            if (m_cells[y][x]->getState() == CELL_STATE::FORBIDDEN)
+            {
+                SDL_RenderCopy(world.m_main_renderer, m_crossTexture, NULL, &buffRect);
             }
         }
     }

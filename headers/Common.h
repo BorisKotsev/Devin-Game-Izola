@@ -26,8 +26,8 @@ enum GAME_STATE
 enum class CELL_STATE
 {
     AVAILABLE = 0,
-    PLAYER,
-    FORBIDDEN
+    PLAYER = 1,
+    FORBIDDEN = 2
 };
 
 struct UI_object
