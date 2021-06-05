@@ -14,10 +14,14 @@ public:
 	void draw();
 	void update();
 
+	void initSession(int size);
+
 	bool offBounds(const coordinates&);
 	bool isEmptyCell(const coordinates& coor);
 
 private:
 	std::vector<Player*> m_players;
-	std::vector<Cell*> cells;
+	std::vector <std::vector<Cell*>> m_cells;
+	unsigned short m_boardSize;
+
 };
