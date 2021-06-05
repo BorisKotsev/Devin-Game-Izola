@@ -42,4 +42,10 @@ struct coordinates
     int y = 0;
 };
 
+struct fcoordinates
+{
+    float x = 0;
+    float y = 0;
+};
+
 #endif // DEFINES_H_INCLUDED

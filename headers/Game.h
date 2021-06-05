@@ -22,9 +22,20 @@ public:
 	bool isEmptyCell(const coordinates& coor);
 	void placeElimination(const coordinates&);
 
+	void addPlayer(string configFile);
+
 private:
 	std::vector<Player*> m_players;
 	std::vector <std::vector<Cell*>> m_cells;
 	unsigned short m_boardSize;
+	SDL_Texture* m_whiteCellTexture;
+	SDL_Texture* m_blackCellTexture;
+
+	unsigned short m_boardWidth;
+	unsigned short m_startOfBoard;
+	unsigned short m_topMargin;
+	unsigned short m_cellWidth;
+
+	SDL_Rect buffRect;
 
 };

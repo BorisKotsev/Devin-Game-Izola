@@ -44,6 +44,8 @@ void World::init()
         file.close();
     }
 
+    m_game.load("game.txt");
+
     //cursorImg = "img\\menu\\" + cursorImg;
 
     //SDL_Surface* loadSurface = SDL_LoadBMP((cursorImg.c_str()));

@@ -21,8 +21,18 @@ public:
 	void draw();
 
 	SDL_Rect m_objRect;
+	SDL_Rect m_dstRect;
 
 	SDL_Texture* m_playerTexture;
-	SDL_Texture* m_borderTexture;
 
+    coordinates m_coor;
+    coordinates m_direction;
+
+    UI_object m_selectedPlayer;
+
+    bool m_borderActive;
+	bool m_moving;
+
+    double m_moveRatio;
+    double m_speed;
 };
