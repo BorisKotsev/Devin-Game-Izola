@@ -105,6 +105,26 @@ void Game::draw()
 
 void Game::update()
 {
+    m_moved = true;
+    if (m_moved)
+    {
+        if (world.m_mouseIsPressed)
+        {
+            for (unsigned short y = 0; y < m_cells.size(); y++)
+            {
+                for (unsigned short x = 0; x < m_cells[y].size(); x++)
+                {
+                    buffRect.x = m_startOfBoard + y * m_cellWidth;
+                    buffRect.y = m_topMargin + x * m_cellWidth;
+                    if (checkForMouseCollision(world.m_mouseCoordinates.x, world.m_mouseCoordinates.y, buffRect))
+                    {
+                        m_cells[y][x]->setState(CELL_STATE::FORBIDDEN);
+                    }
+                }
+            }
+        }
+    }
+
     for (auto& player : m_players)
     {
         player->update();

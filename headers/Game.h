@@ -37,6 +37,9 @@ private:
 	unsigned short m_topMargin;
 	unsigned short m_cellWidth;
 
+	unsigned short m_playerOnTurn;
+	bool m_moved;
+
 	SDL_Rect buffRect;
 
 };
