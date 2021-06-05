@@ -4,3 +4,9 @@ blackCellImg: green-cell.bmp
 crossImg: cross.bmp
 boardWidth: 900
 topMargin: 180
+player1Turn: player1turn.bmp
+player2Turn: player2turn.bmp
+player1Wins: player1Wins.bmp
+player2Wins: player2Wins.bmp
+SelectCellToMove: selectCell.bmp
+SelectCellToEliminate: selectCellDelete.bmp

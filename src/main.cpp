@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	
 	world.init();
 
-	world.m_gameState = GAME;
+	world.m_gameState = MENU;
 
 	while (!world.m_endGame)
 	{
@@ -22,16 +22,16 @@ int main(int argc, char *argv[])
 		{
 			while (!world.m_quitScene)
 			{
-				//world.input();
-				//world.m_menu.update();
-				//world.m_menu.draw();
+				world.input();
+				world.m_menu.update();
+				world.m_menu.draw();
 				SDL_Delay(25);
 			}
 			world.m_quitScene = false;
 		}
 		if (world.m_gameState == GAME)
 		{
-			world.m_game.initSession(30);
+			//world.m_game.initSession(30);
 			while (!world.m_quitScene)
 			{
 				world.input();
