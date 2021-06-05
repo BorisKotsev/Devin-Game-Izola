@@ -1,4 +1,4 @@
-#include "Game.h"
+#include "../headers/Game.h"
 
 Game::Game()
 {
@@ -54,14 +54,14 @@ bool Game::isEmptyCell(const coordinates& coor)
 {
     if (!offBounds(coor))
     {
-        if (m_cells[coor.x][coor.y].m_state == AVAILABLE)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        //if (m_cells[coor.x][coor.y].m_state == AVAILABLE)
+        //{
+        //    return true;
+        //}
+        //else
+        //{
+        //    return false;
+        //}
     }
     else {
         return false;
