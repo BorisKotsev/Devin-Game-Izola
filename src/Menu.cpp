@@ -7,6 +7,7 @@ Menu::Menu()
 {
     m_menuTexture = nullptr;
     isWriting = false;
+    inputDelay = 1000;
 }
 
 Menu::~Menu()
@@ -120,6 +121,7 @@ void Menu::update()
         {
             isWriting = true;
             m_input = ""; 
+            timeFromLastInput = 0;
         }
         else
         {
@@ -130,6 +132,7 @@ void Menu::update()
     if (isWriting)
     {
         handleEvent();
+        timeFromLastInput++;
     }
     else
     {
@@ -143,21 +146,32 @@ void Menu::handleEvent()
     world.input();
     SDL_Event event = world.m_event;
 
-    if (m_input.size() >= 2)
+    if (timeFromLastInput < inputDelay)
     {
         return;
     }
 
-    if (event.type == SDL_TEXTINPUT && event.type == SDL_KEYDOWN)
+    if (m_input.size() >= 5)
     {
+        return;
+    }
+
+    if (event.key.keysym.sym == SDLK_BACKSPACE && m_input.size() > 0 && event.type != SDL_KEYDOWN)
+    {
+        m_input = m_input.substr(0, m_input.length() - 1);
+        std::cout << "Text: " << m_input << std::endl;
+        return;
+    }
+
+    if (event.type == SDL_TEXTINPUT)
+    {
+        std::cout << "Type: " << (*event.text.text) << std::endl;
+        
         if (std::isdigit(*event.text.text))
         {
             m_input += event.text.text;
         }
     }
 
-    if (event.key.keysym.sym == SDLK_BACKSPACE && m_input.size() > 0 && event.type != SDL_KEYDOWN)
-    {
-        m_input = m_input.substr(0, m_input.length() - 1);
-    }
+    std::cout << "Text: " << m_input << std::endl;
 }
