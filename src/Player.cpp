@@ -13,7 +13,7 @@ Player::~Player()
     //dtor
 }
 
-void Player::init(string configFile)
+void Player::init(string configFile, unsigned short width, unsigned short x, unsigned short y)
 {
     srand(time(NULL));
 
@@ -35,10 +35,13 @@ void Player::init(string configFile)
     m_playerTexture = LoadTexture(playerImg, world.m_main_renderer);
     m_selectedPlayer.objTexture = LoadTexture(borderImg, world.m_main_renderer);
 
-    m_objRect.x = 400;
-    m_objRect.y = 600;
-    m_objRect.w = 64;
-    m_objRect.h = 64;
+    m_logicalCoor.x = x;
+    m_logicalCoor.y = y;
+
+    m_objRect.x = world.m_game.logicalToScreen(m_logicalCoor).x;
+    m_objRect.y = world.m_game.logicalToScreen(m_logicalCoor).y;
+    m_objRect.w = width;
+    m_objRect.h = width;
 
     m_coor.x = m_objRect.x;
     m_coor.y = m_objRect.y;
@@ -83,12 +86,22 @@ void Player::update()
         
         if (!checkForMouseCollision(world.m_mouseCoordinates.x, world.m_mouseCoordinates.y, m_objRect))
         {
-            m_dstRect.x = world.m_mouseCoordinates.x - m_objRect.w / 2;
-            m_dstRect.y = world.m_mouseCoordinates.y - m_objRect.h / 2;
+            if (world.m_game.screenCoorToLogical(world.m_mouseCoordinates).x != -1)
+            {
+                m_dstRect.x = world.m_game.screenCoorToLogical(world.m_mouseCoordinates).x;
+                m_dstRect.y = world.m_game.screenCoorToLogical(world.m_mouseCoordinates).y;
+                m_logicalCoor.x = m_dstRect.x;
+                m_logicalCoor.y = m_dstRect.y;
+                coordinates buffCoor;
+                buffCoor.x = m_dstRect.x;
+                buffCoor.y = m_dstRect.y;
+                m_dstRect.x = world.m_game.logicalToScreen(buffCoor).x;
+                m_dstRect.y = world.m_game.logicalToScreen(buffCoor).y;
 
-            m_borderActive = false;
+                m_borderActive = false;
 
-            m_moving = true;
+                m_moving = true;
+            }
         }
         
     }
@@ -98,30 +111,37 @@ void Player::update()
         m_direction.x = m_dstRect.x - m_objRect.x;
         m_direction.y = m_dstRect.y - m_objRect.y;
 
-        m_moveRatio = (double)m_direction.x / (double)m_direction.y;
-
-        if (m_direction.x < 0)
+        if (m_direction.x > 0)
         {
-            m_coor.x += m_speed * fabs(m_moveRatio) * -1.0;
+            m_velocity.x = 1.0f;
+        }
+        else if (m_direction.x < 0) {
+            m_velocity.x = -1.0f;
         }
         else
         {
-            m_coor.x += m_speed * fabs(m_moveRatio);
+            m_velocity.x = 0.0f;
         }
 
-        if (m_direction.y < 0)
+        if (m_direction.y > 0)
         {
-            m_coor.y += m_speed * -1.0 / fabs(m_moveRatio);
+            m_velocity.y = 1.0f;
+        }
+        else if (m_direction.y < 0) {
+            m_velocity.y = -1.0f;
         }
         else
         {
-            m_coor.y += m_speed / fabs(m_moveRatio);
+            m_velocity.y = 0.0f;
         }
+
+        m_coor.x += m_speed * m_velocity.x;
+        m_coor.y += m_speed * m_velocity.y;
 
         m_objRect.x = m_coor.x;
         m_objRect.y = m_coor.y;
 
-        if (abs(m_dstRect.x - m_objRect.x) < 5)
+        if (abs(m_dstRect.x - m_objRect.x) < 5 && abs(m_dstRect.y - m_objRect.y) < 5)
         {
             m_moving = false;
         }

@@ -94,7 +94,7 @@ void Menu::update()
         {
             world.m_quitScene = true;
             world.m_gameState = GAME_STATE::GAME;
-            world.m_game.initSession(std::stoi(m_input));
+            //world.m_game.initSession(std::stoi(m_input));
         }
         if (checkForMouseCollision(world.m_mouseCoordinates.x, world.m_mouseCoordinates.y,
                                    exitButton.objectRect))

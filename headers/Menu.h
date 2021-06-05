@@ -30,8 +30,6 @@ public:
     void buttonHover(Button* button);
 
     void handleEvent();
-protected:
-
 private:
     std::string m_input;
 };
