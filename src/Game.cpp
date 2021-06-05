@@ -73,6 +73,7 @@ void Game::load(string configFile)
 void Game::draw()
 {
     SDL_RenderClear(world.m_main_renderer);
+
     for (unsigned short y = 0; y < m_cells.size(); y++)
     {
         for (unsigned short x = 0; x < m_cells[y].size(); x++)
@@ -184,3 +185,14 @@ void Game::addPlayer(string configFile)
         m_players.push_back(player2);
     }
 }
+
+bool Game::checkForMove(coordinates start, coordinates end)
+{
+    if ((abs(start.x - end.x) || abs(start.y - end.y)) >= 2)
+    {
+        return false;
+    }
+    
+    return true;
+}
+

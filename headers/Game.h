@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <cmath>
 #include "Player.h"
 #include "Cell.h"
 #include "Common.h"
@@ -21,6 +22,7 @@ public:
 	bool offBounds(const coordinates&);
 	bool isEmptyCell(const coordinates& coor);
 	void placeElimination(const coordinates&);
+	bool checkForMove(coordinates start, coordinates end);
 
 	void addPlayer(string configFile);
 
